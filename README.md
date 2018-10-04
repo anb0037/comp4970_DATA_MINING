@@ -1,0 +1,2 @@
+# comp4970_DATA_MINING
+Group UG10 Project for COMP4970
