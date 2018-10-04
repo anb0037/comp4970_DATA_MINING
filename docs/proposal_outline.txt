@@ -1,0 +1,26 @@
+Problem to be considered:
+Efficient means of comparing 2 graphs. To our knowledge, no previous algorithm exists to compare two graphs that meets all of the following criteria:
+	-Permutation Invariance (agnostic to the order in which the nodes are presented)
+	-Scale adaptivity (ability to compare graphs at both a local (node) level as well as a global (full graph) level)
+	-Size Invariance (ability to detect structural similarities regardless of the difference of size between the 2 graphs)
+	-Efficient (a different, but popular graph comparison method, graph edit distance, is NP-hard to compute and APX-hard to approximate)
+
+Algorithm to be implemented:
+	NetLSD: (Network Laplacian Spectral Descriptor) a graph comparison algorithm based in spectral graph theory that executes in constant time. The result is a representation-based distance between any two graphs G1 & G2. This distance function should be both symmetric & satisfy the triangle inequality, as well as the 3 properties listed above (permutation & size invariance, scale adaptivity)
+
+Datasets to be evaluated:
+	The paper evaluates six different bioinformatic data sets (MUTAG, PTC, PROTEINS, NCI1, NCI109, ENZYMES, D&D) as well as 3 datasets collecteed from social networks (IMDB, REDDIT, COLLAB). Our project will use just a select few of these. (We should probably focus on just the social media ones, as they will likely be easier to interpret useful info from)
+
+Data retrieval methods:
+	We will get in contact with the authors to see if they will share their datasets with us. If not, we will attempt to collect similar data ourselves using our own web-crawling scripts.
+
+Evaluation measures:
+	Results are compared to two different comparison methods, namely NetSimile & FGSD.
+	-NetSimile: a representation obtaining by combining properties of nodes & edges (average degree, standard deviation of the degree of a node's neighbors, among others)
+	-FGSD: Uses the biharmonic kernel of a graph to bin each graph into 0.0001-wide bins and form a histogram. 
+
+References: 
+
+(need more of these, esp. for NetSimile & FGSD, maybe others)
+
+Anton Tsitsulin, Davide Mottin, Panagiotis Karras, Alex Bronstein, and Emmanuel Müller. 2018. NetLSD: Hearing the Shape of a Graph. KDD 2018. 1-10.
