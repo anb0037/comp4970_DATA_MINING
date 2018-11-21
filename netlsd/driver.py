@@ -1,9 +1,10 @@
-#import netlsd as nlsd
+import netlsd as nlsd
 import networkx as nx
 import extract_data as ed
 import matplotlib.pyplot as plt
 import util as ut 
 import display as dis
+import numpy as np
 import sys
 #from datetime import datetime as dt
 
@@ -16,22 +17,16 @@ if len(sys.argv) >= 2 and isinstance(sys.argv[1], str):
 	dataset_prefix = sys.argv[1]
 graphs = ed.extract_data(dataset_prefix)
 
-eigenvals = []
-for g in graphs:
-	laplacian = nx.laplacian_matrix(g)
-	eigenvals.append(ut.eigenvalues(laplacian))
+heat_traces = []
+for index, graph in enumerate(graphs):
+	heat_trace = np.array(nlsd.netlsd(graph, 'heat'))
+	heat_traces.append(heat_trace)
 
-
-
-
-#calculate laplacian heat kernel of first 2 graphs
-#descriptor1 = nlsd.heat(graphs[0])
-#descriptor2 = nlsd.heat(graphs[1])
-
-#calculate graph proximity between first 2 graphs
-#print(nlsd.compare(descriptor1, descriptor2))
-
-#display each graph
-#for i in range(len(graphs)):
-#	nx.draw(graphs[i], with_labels = True)
-#	plt.show()
+#computes the most_similar_index the the graph specified by graph_index
+graph_index = 23
+min_compare_distance = nlsd.compare(heat_traces[graph_index], heat_traces[1])
+for index, trace in enumerate(heat_traces):
+	compare_distace = nlsd.compare(heat_traces[graph_index], heat_traces[index])
+	if index != graph_index and compare_distace < min_compare_distance:
+		min_compare_distance = compare_distace
+		most_similar_index = index

@@ -6,7 +6,7 @@ import scipy.sparse as sp
 #matrix: matrix (ndarray) to compute eigenvalues for
 
 #-----RETURNS-----#
-#eigenspectrum of the matrix, vector containing n_eigvals approximate eigenvalues OR an
+#matrix representing the eigenspectrum of the given matrix
 
 def eigenvalues(matrix):
 	n_vertices = matrix.shape[0]

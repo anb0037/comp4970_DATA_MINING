@@ -1,40 +1,37 @@
 import util as ut
 import heat_kernel as hk
 import wave_kernel as wk
+import networkx as nx
 import numpy as np
 
 #--------PARAMS----------#
 #G: Input Graph (networkx graph)
 #kernel: type of kernel to compute {"heat", "wave"}
 #timespaces: timescales for diffusion sampling
-#eigenvalues: number of eigenvalues to compute
-#normalization: 
+#normalization: determines which graph to normalize the result with 
+# {"none": no normalization, "empty": normalization with empty graph, "complete": normaliization w/ complete graph}
 #normalized_laplacian: specifies whether to use normalized or regular laplacian (bool)
  
 #-------RETURNS----------#
 #NetLSD spectral descriptor for chosen graph (numpy.ndarray)
 
-def netlsd(G, kernel, timespaces, eigenvalues, normalization, normalized_laplacian):
+def netlsd(G, kernel, timespaces=np.logspace(-2, 2, 250), normalization='none', normalized_laplacian='false'):
 	
 	#compute (normalized?) laplacian matrix for input graph
 	if normalized_laplacian:
-		#returns numpy.matrix
 		laplacian = nx.normalized_laplacian_matrix(G)
-	else
-		#returns scipy.sparse matrix
+	else:
 		laplacian = nx.laplacian_matrix(G)
 
 	#compute n eigenvalues of the laplacian where n is given by eigenvalues parameter
-	eigenvals = ut.eigenvalues(laplacian, eigenvalues)
+	eigenvals = ut.eigenvalues(laplacian)
 
 	if kernel == "heat":
 		#compute heat kernel trace representation
-		return hk.heat(G, timespaces, eigenvalues, normalization)
-	else if kernel == "wave":
+		return hk.heat(eigenvals, timespaces, normalization)
+	elif kernel == "wave":
 		#compute wave kernel trace representation
-		return wk.wave(G, timespaces, eigenvalues, normalization)
-	else
-		return 0
+		return wk.wave(eigenvals, timespaces, normalization)
 
 
 #--------PARAMS----------#

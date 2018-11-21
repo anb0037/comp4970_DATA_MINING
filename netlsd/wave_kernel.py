@@ -1,15 +1,15 @@
 import numpy as np
 
 #--------PARAMS----------#
-#G: Input Graph (networkx graph)
-#timespaces:
-#eigenvalues:
-#normalization:
-#normalized_laplacian: (bool)
- 
-#-------RETURNS----------#
-#NetLSD spectral descriptor for chosen graph (numpy.ndarray) given by wave kernel
+#eigvals: matrix of eigenvalues of the (normalized) laplacian of the graph
+#timespaces: timescales for diffusion sampling
+#normalization: determines which graph to normalize the result with 
+# {"none": no normalization, "empty": normalization with empty graph, "complete": normaliization w/ complete graph}
 
-def wave(eivals, timespaces, eigenvalues, normalization, normalized_laplacian):
+#-------RETURNS----------#
+#NetLSD spectral descriptor for chosen graph (numpy.ndarray) given by wave kernel trace at specified time scales
+#TODO compute wave kernel
+def wave(eigvals, timespaces, normalization):
+
 	return 0
 

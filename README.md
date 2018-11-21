@@ -4,7 +4,8 @@ Group UG10 Project for COMP4970
 
 See original NetLSD implementation: https://github.com/xgfs/NetLSD
 
-##Getting Started
+#Getting Started
+
 Requirements: Python, PIP
 
 Unzip data folder into netlsd/data
