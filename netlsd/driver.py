@@ -6,9 +6,6 @@ import util as ut
 import display as dis
 import numpy as np
 import sys
-#from datetime import datetime as dt
-
-
 
 #construct graph data from dataset
 #param is selected data set prefix
