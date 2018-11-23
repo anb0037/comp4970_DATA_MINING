@@ -15,7 +15,7 @@ import numpy as np
 #-------RETURNS----------#
 #NetLSD spectral descriptor for chosen graph (numpy.ndarray)
 
-def netlsd(G, kernel, timespaces=np.logspace(-2, 2, 250), normalization='none', normalized_laplacian='false'):
+def netlsd(G, kernel, timespaces=np.logspace(-2, 2, 250), normalization='empty', normalized_laplacian=True):
 	
 	#compute (normalized?) laplacian matrix for input graph
 	if normalized_laplacian:
@@ -28,10 +28,10 @@ def netlsd(G, kernel, timespaces=np.logspace(-2, 2, 250), normalization='none', 
 
 	if kernel == "heat":
 		#compute heat kernel trace representation
-		return hk.heat(eigenvals, timespaces, normalization)
+		return hk.heat(eigenvals, timespaces, normalization, normalized_laplacian)
 	elif kernel == "wave":
 		#compute wave kernel trace representation
-		return wk.wave(eigenvals, timespaces, normalization)
+		return wk.wave(eigenvals, timespaces, normalization, normalized_laplacian)
 
 
 #--------PARAMS----------#
