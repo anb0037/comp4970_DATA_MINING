@@ -16,7 +16,6 @@ import numpy as np
 #NetLSD spectral descriptor for chosen graph (numpy.ndarray)
 
 def netlsd(G, kernel, timespaces=np.logspace(-2, 2, 250), normalization='empty', normalized_laplacian=True):
-	
 	#compute (normalized?) laplacian matrix for input graph
 	if normalized_laplacian:
 		laplacian = nx.normalized_laplacian_matrix(G)
