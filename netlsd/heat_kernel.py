@@ -5,7 +5,7 @@ import numpy as np
 # timespaces: timescales for diffusion sampling
 # normalization: determines which graph to normalize the result with
 # {"none": no normalization, "empty": normalization with empty graph, "complete": normaliization w/ complete graph}
-
+#normalized_laplacian: boolean to indicate if the eigenvalues were computed from the normalized or unnormalized laplacian
 #-------RETURNS----------#
 # NetLSD spectral descriptor for chosen graph (numpy.ndarray) given by heat kernel trace
 
@@ -20,13 +20,15 @@ def heat(eigenvals, timespaces, normalization, normalized_laplacian):
 
         # add heat kernel to trace representation
         heat_kernel_trace.append(heat_kernel)
+    heat_kernel_trace = np.array(heat_kernel_trace)
 
-    if normalization == "empty":  # normalize heat kernel trace against empty graph
-        return heat_kernel_trace / n_vertices
-    elif normalization == "complete" and normalized_laplacian:  # normalize heat kernel trace against complete graph
-        return heat_kernel_trace / (1 + (n_vertices - 1) * np.exp(-timespaces))
+	if normalization == "empty":  # normalize heat kernel trace against empty graph
+		return heat_kernel_trace / n_vertices
     elif normalization == "complete":
-        return heat_kernel_trace / (1 + n_vertices * np.exp(-n_vertices * timespaces))
-    else:  # return heat kernel trace without normalization
-        return heat_kernel_trace
+        if normalized_laplacian:  # normalize heat kernel trace against complete graph
+		    return heat_kernel_trace / (1 + (n_vertices - 1) * np.exp(-timespaces))
+	    else:
+		    return heat_kernel_trace / (1 + n_vertices * np.exp(-n_vertices * timespaces))
+	else:  # return heat kernel trace without normalization
+		return heat_kernel_trace
 
