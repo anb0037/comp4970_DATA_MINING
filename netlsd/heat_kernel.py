@@ -4,7 +4,7 @@ import numpy as np
 # eigvals: matrix of eigenvalues of the (normalized) laplacian of the graph
 # timespaces: timescales for diffusion sampling
 # normalization: determines which graph to normalize the result with
-#   {"none": no normalization, "empty": normalization with empty graph, "complete": normaliization w/ complete graph}
+#   {"none": no normalization, "empty": normalization with empty graph, "complete": normalization w/ complete graph}
 # normalized_laplacian:
 #   boolean to indicate if the eigenvalues were computed from the normalized or unnormalized laplacian
 
