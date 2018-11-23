@@ -19,5 +19,5 @@ if __name__ == "__main__":
     # computes heat traces for each graph based on the normalized laplacian
     heat_traces = []
     for index, graph in enumerate(graphs):
-        heat_trace = nlsd.netlsd(graph, 'heat', normalized_laplacian=True, normalization='empty')
+        heat_trace = nlsd.netlsd(graph, 'heat', True, 'empty')
         heat_traces.append(heat_trace)
