@@ -56,12 +56,12 @@ def extract_data(dataset):
 # generates test graphs by shuffling edges randomly
 #-----PARAMS-----#
 # graphs: array of source graphs to rearrange
-# prob: probability of a given edge to be changed 
+# prob: probability of a given edge to stay the same
 # iterations: number of shuffle iterations
 
 #-----RETURNS-----#
 # array of shuffled graphs
-def shuffle_graphs(graphs, prob=0.5):
+def shuffle_graphs(graphs, prob):
     new_graphs = []
     for g in graphs:
         node_offset = np.array(g.nodes)[0]
@@ -72,14 +72,13 @@ def shuffle_graphs(graphs, prob=0.5):
             roll = np.random.random()
             new_edge = None
             if (roll <= prob):
+                new_edge = edge
+            else:
                 source_node = edge[0]
                 target_node = np.random.randint(node_offset, node_offset + n_nodes)
                 while target_node == source_node:
                     target_node = np.random.randint(node_offset, node_offset + n_nodes)
                 new_edge = (edge[0], target_node)
-                
-            else:
-                new_edge = edge
             new_edges.append(new_edge)
         h = nx.Graph()
         h.add_nodes_from(g.nodes)

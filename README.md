@@ -26,7 +26,7 @@ Precision, Recall, Accuracy and F-Score for that iteration will be stored in `pr
 
 ## Parameter specification
 
-dataset_prefix: indicates which dataset to use, defaults to 'MUTAG' ('DD', 'Enzymes', 'IMDB-BINARY', 'IMDB-MULTI', 'MUTAG', 'NCI1', 'NCI109', 'PROTEINS', 'REDDIT-BINARY')
+dataset_prefix: indicates which dataset to use, defaults to 'MUTAG' ('DD', 'ENZYMES', 'IMDB-BINARY', 'IMDB-MULTI', 'MUTAG', 'NCI1', 'NCI109', 'PROTEINS', 'REDDIT-BINARY')
 
 kernel_type: indicates which kernel to use for descriptor calculation ('heat', 'wave')
 
@@ -35,5 +35,9 @@ normalization: indicates which type of normalization to use on the descriptor ('
 normalized_laplacian: boolean indicating whether or not to used normalized instead of regular laplacian, defaults to True
 
 timspaces: timescales for diffusion sampling, defaults to `np.logspace(-2, 2, 250)`
+
+training_ratio: A float in the (0,1) interval indicating the ratio of training to testing data, defaults to 0.8
+
+classification_difficulty: A float in the (0,1) interval indicating the chance of a given edge not changing when creating falsified data. A higher value would result in graphs that are more similar to the real dataset and thus increase the difficulty of the classification task. Defaults to 0.5
 
 Edit lines 10-14 in driver.py to adjust parameters for kernel calculation

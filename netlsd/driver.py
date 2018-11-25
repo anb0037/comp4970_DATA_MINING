@@ -12,6 +12,8 @@ if __name__ == "__main__":
     normalization = 'empty' # vary this
     normalized_laplacian = True # keep this fixed
     timespaces = np.logspace(-2, 2, 250) # keep this fixed
+    training_ratio = 0.8 # keep this fixed
+    classification_difficulty = 0.5 #keep this fixed
 
     if len(sys.argv) >= 2 and isinstance(sys.argv[1], str):
         dataset_prefix = sys.argv[1]
@@ -19,11 +21,10 @@ if __name__ == "__main__":
     # extract real data from csv
     graphs = ed.extract_data(dataset_prefix)
     # generate fake data
-    fake_graphs = ed.shuffle_graphs(graphs)
+    fake_graphs = ed.shuffle_graphs(graphs, classification_difficulty)
     # combining & shuffling real and fake data
     complete_data = ed.combine(graphs, fake_graphs)
     # splitting training & testing sets
-    training_ratio = 0.8
     bound = int(len(complete_data) * training_ratio)
     training_set = complete_data[:bound]
     testing_set = complete_data[bound:]
@@ -45,6 +46,7 @@ if __name__ == "__main__":
     # True if the graph is authentic, False if it is not
     predictions = [] 
     for index, graph in enumerate(testing_set):
+		# predict the label of the test graph as the label of it's first nearest neighbor in the training set
         first_nn_index = nlsd.first_NN(test_descriptors[index], training_descriptors)
         prediction = training_set[first_nn_index][1]
         predictions.append((prediction, testing_set[index][1]))
