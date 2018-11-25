@@ -40,4 +40,4 @@ training_ratio: A float in the (0,1) interval indicating the ratio of training t
 
 classification_difficulty: A float in the (0,1) interval indicating the chance of a given edge not changing when creating falsified data. A higher value would result in graphs that are more similar to the real dataset and thus increase the difficulty of the classification task. Defaults to 0.5
 
-Edit lines 10-14 in driver.py to adjust parameters for kernel calculation
+Edit lines 10-16 in driver.py to adjust parameters for kernel calculation
