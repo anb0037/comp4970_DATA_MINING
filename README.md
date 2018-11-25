@@ -24,4 +24,16 @@ Tuples representing (prediction, actual) will be stored in `predictions`
 
 Precision, Recall, Accuracy and F-Score for that iteration will be stored in `precision` `recall` `accuracy` `fscore` variables respectively
 
-Edit lines 12-16 in driver.py to adjust parameters for kernel calculation
+## Parameter specification
+
+dataset_prefix: indicates which dataset to use, defaults to 'MUTAG' ('DD', 'Enzymes', 'IMDB-BINARY', 'IMDB-MULTI', 'MUTAG', 'NCI1', 'NCI109', 'PROTEINS', 'REDDIT-BINARY')
+
+kernel_type: indicates which kernel to use for descriptor calculation ('heat', 'wave')
+
+normalization: indicates which type of normalization to use on the descriptor ('none', 'empty', 'complete')
+
+normalized_laplacian: boolean indicating whether or not to used normalized instead of regular laplacian, defaults to True
+
+timspaces: timescales for diffusion sampling, defaults to `np.logspace(-2, 2, 250)`
+
+Edit lines 10-14 in driver.py to adjust parameters for kernel calculation
