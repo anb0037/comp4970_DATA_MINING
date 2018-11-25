@@ -1,7 +1,8 @@
 import csv
 import networkx as nx
 import os
- 
+import numpy as np
+import random as rand
 # returns an array of networkx representations of each graph in the dataset
 # param dataset: name of dataset
 
@@ -39,17 +40,63 @@ def extract_data(dataset):
             for i in range(num_graphs):
                 graphs.append(nx.Graph())
                 print("Initializing graph " + str(i + 1))
-
+            print("Adding nodes...")
             # add nodes to graphs
             for i in range(num_nodes):
                 graph_index = int(node_map[int(i)]) - 1
                 node_index = int(i)
                 graphs[graph_index].add_node(node_index + 1)
-                print("Adding node: Graph_ID: " + str(graph_index + 1) + ", node_ID: " + str(node_index + 1))
-
+            print("Adding edges...")
             # add edges
             for edge in edges:
-                print("Adding edge: Graph_ID: " + str(edge[0]) + ", node1_ID: " + str(edge[1]) + ", node2_ID: " + str(edge[2]))
                 graphs[int(edge[0]) - 1].add_edge(edge[1], edge[2])
 
             return graphs
+
+# generates test graphs by shuffling edges randomly
+#-----PARAMS-----#
+# graphs: array of source graphs to rearrange
+# prob: probability of a given edge to be changed 
+# iterations: number of shuffle iterations
+
+#-----RETURNS-----#
+# array of shuffled graphs
+def shuffle_graphs(graphs, prob=0.5):
+    new_graphs = []
+    for g in graphs:
+        node_offset = np.array(g.nodes)[0]
+        n_nodes = len(np.array(g.nodes))
+        old_edges = np.array(g.edges)
+        new_edges = []
+        for edge in old_edges:
+            roll = np.random.random()
+            new_edge = None
+            if (roll <= prob):
+                source_node = edge[0]
+                target_node = np.random.randint(node_offset, node_offset + n_nodes)
+                while target_node == source_node:
+                    target_node = np.random.randint(node_offset, node_offset + n_nodes)
+                new_edge = (edge[0], target_node)
+                
+            else:
+                new_edge = edge
+            new_edges.append(new_edge)
+        h = nx.Graph()
+        h.add_nodes_from(g.nodes)
+        h.add_edges_from(new_edges)
+        new_graphs.append(h)
+    return new_graphs
+
+# combines real data with generated data, shuffles the result
+#-----PARAMS-----#
+# real_data: array of real graphs
+# fake_data: array of generated graphs
+#-----RETURNS-----#
+# combined, randomized array of the combined data in tuples given by (graph, isReal)
+def combine(real_data, fake_data):
+    data = []
+    for index, g in enumerate(real_data):
+        data.append((g, True))
+        data.append((fake_data[index], False))
+    rand.shuffle(data)
+    return data

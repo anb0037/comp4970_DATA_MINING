@@ -9,5 +9,5 @@ import networkx as nx
 
 
 def display(g):
-    nx.draw(g, True)
+    nx.draw(g)
     plt.show()

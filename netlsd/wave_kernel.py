@@ -16,7 +16,7 @@ def wave(eigenvals, timespaces, normalization, normalized_laplacian):
     for i in range(len(timespaces)):
         wave_kernel = np.sum(np.exp(-1j * timespaces[i] * eigenvals))
         wave_kernel_trace.append(wave_kernel)
-
+    wave_kernel_trace = np.array(wave_kernel_trace)
     if normalization == "empty":
         return wave_kernel_trace / n_values
     elif normalization == "complete" and normalized_laplacian:
