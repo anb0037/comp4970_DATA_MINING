@@ -104,24 +104,26 @@ def run(dataset):
 if __name__ == "__main__":
     all_analytics = []
 
-    with open("output.txt", "w") as file:
-        for dataset in {'MUTAG'}:
+    with open("output.csv", "w") as file:
+        file.write(",".join(["dataset", "kernel", "normalization", "accuracy", "precision", "recall", "fscore"]) + "\n")
+        for dataset in DATASETS:
             for kernel in KERNELS:
                 for n in NORMALIZATIONS:
                     da = DatasetAnalytics(dataset, kernel, n)
                     run(da)
                     all_analytics.append(da)
-                    file.write(str(da))
+                    file.write(str(da) + "\n")
 
     fig, ax = plt.subplots()
 
     names = []
     for a in all_analytics:
         if a.name not in names:
-            if '-' in a.name:
-                names.append('\n'.join(a.name.split('-')))
-            else:
-                names.append(a.name)
+            names.append(a.name)
+
+    formatted = []
+    for name in names:
+        formatted.append("\n".join(name.split("-")))
 
     fscores = {
         "heat_none": np.zeros(len(names)),
@@ -140,14 +142,14 @@ if __name__ == "__main__":
             index += 1
         fscores[key][index] = a.fscore
 
-    y_pos = np.arange(len(names))
+    y_pos = np.arange(len(formatted))
     width = 0.15
 
     for i, key in enumerate(fscores):
         ax.bar(y_pos + width * (2 * i - 5)/2, fscores[key], width, label=", ".join(key.split("_")))
 
     ax.set_xticks(y_pos)
-    ax.set_xticklabels(names)
+    ax.set_xticklabels(formatted)
     ax.set_ylabel("Dataset Fscore")
     ax.set_title("Dataset Fscore Comparison")
     ax.legend(loc='lower center')
