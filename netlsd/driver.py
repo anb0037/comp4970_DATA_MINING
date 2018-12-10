@@ -43,7 +43,7 @@ def run(dataset):
     classification_difficulty = 0.5 # keep this fixed
     
     print('Executing {0} kernel with {1} normalization on {2} dataset'.format(dataset.kernel, dataset.normalization, dataset.name))
-
+	start = time.time()
     # extract real data from csv
     graphs = ed.extract_data(dataset_prefix)
     # generate fake data
@@ -96,7 +96,9 @@ def run(dataset):
     dataset.precision = tp / (tp + fp)
     dataset.recall = tp / (tp + fn)
     dataset.calculate_fscore()
-
+	end = time.time()
+	print('Completed in {0:.2f} seconds'.format(end - start))
+	
 
 if __name__ == "__main__":
     all_analytics = []
