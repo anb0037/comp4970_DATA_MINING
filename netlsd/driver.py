@@ -3,8 +3,6 @@ import extract_data as ed
 import numpy as np
 import sys
 import matplotlib.pyplot as plt
-# construct graph data from dataset
-# param is selected data set prefix
 
 DATASETS = {"DD", "MUTAG", "NCI1", "NCI109", "PROTEINS",
             "IMDB-BINARY", "IMDB-MULTI", "REDDIT-BINARY"}
@@ -43,9 +41,8 @@ def run(dataset):
     timespaces = np.logspace(-2, 2, 250) # keep this fixed
     training_ratio = 0.8 # keep this fixed
     classification_difficulty = 0.5 # keep this fixed
-
-    if len(sys.argv) >= 2 and isinstance(sys.argv[1], str):
-        dataset_prefix = sys.argv[1]
+    
+    print('Executing {0} kernel with {1} normalization on {2} dataset'.format(dataset.kernel, dataset.normalization, dataset.name))
 
     # extract real data from csv
     graphs = ed.extract_data(dataset_prefix)

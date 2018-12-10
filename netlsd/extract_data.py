@@ -34,12 +34,12 @@ def extract_data(dataset):
                     edges.append([graph_id1, v1_id, v2_id])
 
             # init networkx graphs
+            print("Initializing graphs... ")
             num_nodes = len(node_map)
             num_graphs = int(node_map[num_nodes - 1])
             graphs = []
             for i in range(num_graphs):
                 graphs.append(nx.Graph())
-                print("Initializing graph " + str(i + 1))
             print("Adding nodes...")
             # add nodes to graphs
             for i in range(num_nodes):
